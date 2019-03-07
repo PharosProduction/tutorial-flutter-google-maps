@@ -33,7 +33,7 @@ class SearchResultsState extends State<Map> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.flag),
         onPressed: () {
-          _goToFuji();
+          _goToLosAngeles();
         },
       ),
     );
@@ -45,11 +45,11 @@ class SearchResultsState extends State<Map> {
       width: MediaQuery.of(context).size.width,
       child: GoogleMap(
         mapType: MapType.normal,
-        initialCameraPosition: tokyoPosition,
+        initialCameraPosition: vegasPosition,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
-        markers: {tokyoMarker, fujiMarker},
+        markers: {vegasMarker, losAngelesMarker},
       ),
     );
   }
@@ -57,26 +57,25 @@ class SearchResultsState extends State<Map> {
   Future<void> _disposeController() async {
     final GoogleMapController controller = await _controller.future;
     controller.dispose();
-    print('is disposed!!!!');
   }
 
-  Future<void> _goToFuji() async {
+  Future<void> _goToLosAngeles() async {
     final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(fujiPosition));
+    controller.animateCamera(CameraUpdate.newCameraPosition(losAngelesPosition));
   }
 }
 
-CameraPosition tokyoPosition = CameraPosition(target: LatLng(35.6895, 139.6917), zoom: 10);
-CameraPosition fujiPosition = CameraPosition(target: LatLng(35.3606, 138.7278), zoom: 9);
+CameraPosition vegasPosition = CameraPosition(target: LatLng(36.0953103, -115.1992098), zoom: 10);
+CameraPosition losAngelesPosition = CameraPosition(target: LatLng(34.0345471, -118.2643037), zoom: 9);
 
-Marker tokyoMarker = Marker(
-  markerId: MarkerId('tokyo'),
-  position: LatLng(35.6895, 139.6917),
-  infoWindow: InfoWindow(title: 'Tokyo'),
+Marker vegasMarker = Marker(
+  markerId: MarkerId('vegas'),
+  position: LatLng(36.0953103, -115.1992098),
+  infoWindow: InfoWindow(title: 'Las Vegas'),
 );
 
-Marker fujiMarker = Marker(
-  markerId: MarkerId('fuji'),
-  position: LatLng(35.3606, 138.7278),
-  infoWindow: InfoWindow(title: 'Mount Fuji'),
+Marker losAngelesMarker = Marker(
+  markerId: MarkerId('losAngeles'),
+  position: LatLng(34.0345471, -118.2643037),
+  infoWindow: InfoWindow(title: 'Los Angeles'),
 );
